@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+    <div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
+        <div>
+            <p th:text="${error}">error</p>
+        </div>
+    </div>
+</body>
+</html>

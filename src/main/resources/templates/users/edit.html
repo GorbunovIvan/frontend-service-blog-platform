@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'users :: editing :: ' + user.getUsername()}">Editing user</title>
+</head>
+<body>
+    <div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
+        <div>
+            <form method="POST" th:action="@{/users/__${id}__}" th:object="${user}">
+                <input type="hidden" name="_method" value="PATCH">
+                <div>
+                    <label for="username">Username</label>
+                    <input id="username" type="text" th:field="*{username}"/>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input id="password" type="password" th:field="*{password}"/>
+                </div>
+                <div>
+                    <label for="phone-number">Phone number</label>
+                    <input id="phone-number" type="text" th:field="*{phoneNumber}"/>
+                </div>
+                <div>
+                    <label for="birthdate">Birthdate</label>
+                    <input id="birthdate" type="date" th:field="*{birthDate}"/>
+                </div>
+                <br/>
+                <div>
+                    <input type="submit" value="Confirm updating"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

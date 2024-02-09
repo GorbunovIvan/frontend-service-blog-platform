@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+    <div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
+        <div th:each="user : ${users}">
+            <div>
+                <a th:href="@{/users/__${user.getId()}__}" th:text="${user.getUsername()}">user</a>
+                <br/>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

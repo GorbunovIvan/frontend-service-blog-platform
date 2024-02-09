@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: frontend-service
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

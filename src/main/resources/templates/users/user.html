@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'users :: ' + user.getUsername()}">Username</title>
+</head>
+<body>
+<div>
+    <div th:insert="~{fragments/menu :: commonMenu}"></div>
+    <div>
+        <p>Username: <span th:text="${user.getUsername()}">username</span></p>
+        <p>Birthdate: <span th:text="${user.getBirthDate()}">birthdate</span></p>
+        <p>Phone number: <span th:text="${user.getPhoneNumber()}">phone number</span></p>
+    </div>
+    <div th:if="${isOwnPage == true}">
+        <hr/>
+        <p><a th:href="@{/users/__${user.getId()}__/edit}">Edit</a></p>
+        <div>
+            <form method="POST" th:action="@{/users/__${id}__}">
+                <input type="hidden" name="_method" value="DELETE">
+                <div><input type="submit" value="Delete"/></div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <hr/>
+        <h3>Posts</h3>
+        <div th:if="${isOwnPage == true}">
+            <form method="POST" th:action="@{/posts}" th:object="${newPost}">
+                <label><input hidden name="user" th:value="${currentUser}"/></label>
+                <div>
+                    <label for="content"></label>
+                    <textarea id="content" th:field="*{content}"></textarea>
+                    <input type="submit" value="Add post"/>
+                </div>
+            </form>
+        </div>
+        <br/>
+        <div th:each="post : ${user.getPosts()}">
+            <div>
+                <a th:href="@{/posts/__${post.getId()}__}" th:text="${post.toStringShort()}">post</a>
+                <form th:if="${isOwnPage}" method="POST" th:action="@{/posts/__${post.getId()}__}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <div><input type="submit" value="Delete"/></div>
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <h3>Comments made by user</h3>
+        <div th:each="comment : ${user.getComments()}">
+            <div>
+                <a th:href="@{/posts/__${comment.getPostId()}__}" th:text="${comment.toStringShort()}">comment</a>
+                <form th:if="${isOwnPage}" method="POST" th:action="@{/comments/__${comment.getId()}__}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <div><input type="submit" value="Delete"/></div>
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

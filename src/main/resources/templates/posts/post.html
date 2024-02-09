@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'posts :: ' + post.getTitle()}">Post</title>
+</head>
+<body>
+<div>
+    <div th:insert="~{fragments/menu :: commonMenu}"></div>
+    <div>
+        <p>By: <a th:href="@{/users/__${post.getUser().getId()}__}" th:text="${post.getUser().getUsername()}">user</a></p>
+        <p>At: <span th:text="${post.getCreatedAt()}">created at</span></p>
+        <p>Content: <span th:text="${post.getContent()}">content</span></p>
+    </div>
+    <div th:if="${isOwnPost == true}">
+        <hr/>
+        <form method="POST" th:action="@{/posts/__${id}__}">
+            <input type="hidden" name="_method" value="DELETE">
+            <div><input type="submit" value="Delete"/></div>
+        </form>
+    </div>
+    <div>
+        <hr/>
+        <h3>Comments</h3>
+        <div th:if="${currentUser}">
+            <form method="POST" th:action="@{/comments}" th:object="${newComment}">
+                <label><input hidden name="post" th:value="${post}"/></label>
+                <label><input hidden name="user" th:value="${currentUser}"/></label>
+                <div>
+                    <label for="content"></label>
+                    <textarea id="content" th:field="*{content}"></textarea>
+                    <input type="submit" value="Add comment"/>
+                </div>
+            </form>
+        </div>
+        <br/>
+        <div th:each="comment : ${post.getComments()}">
+            <div>
+
+                <span>at <span th:text="${post.getCreatedAt()}">created at</span></span>
+                <span>by: <a th:href="@{/users/__${comment.getUser().getId()}__}" th:text="${comment.getUser().getUsername()}">user</a></span>
+                <br/>
+                &nbsp;&nbsp;<span th:text="${comment.getContent()}">comment</span>
+
+                <form th:if="${comment.getUser().equals(currentUser)}" method="POST" th:action="@{/comments/__${comment.getId()}__}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <div><input type="submit" value="Delete"/></div>
+                </form>
+
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
