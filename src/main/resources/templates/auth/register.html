@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+    <div>
+        <h4>Registration</h4>
+        <div>
+            <form method="POST" th:action="@{/auth/register}" th:object="${user}">
+                <div>
+                    <label>Username: <input type="text" th:field="*{username}"/></label>
+                </div>
+                <div>
+                    <label>Password: <input type="password" th:field="*{password}"/></label>
+                </div>
+                <div>
+                    <label>Phone number: <input type="text" th:field="*{phoneNumber}"/></label>
+                </div>
+                <div>
+                    <label>Birthdate: <input type="date" th:field="*{birthDate}"/></label>
+                </div>
+                <br/>
+                <div>
+                    <input type="submit" value="Register"/>
+                </div>
+            </form>
+        </div>
+        <p>Or you can try to <a href="/auth/login">log in</a></p>
+    </div>
+</body>
+</html>

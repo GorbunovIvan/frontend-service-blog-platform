@@ -36,7 +36,6 @@ public class PostController {
         }
 
         model.addAttribute("post", post);
-        model.addAttribute("currentUser", currentUser);
         model.addAttribute("isOwnPost", post.getUser().equals(currentUser));
         model.addAttribute("newComment", new CommentRequestDto(post, getCurrentUser(), ""));
         return "posts/post";
@@ -75,6 +74,7 @@ public class PostController {
         return "redirect:/users/self";
     }
 
+    @ModelAttribute("currentUser")
     private User getCurrentUser() {
         return usersUtil.getCurrentUser();
     }

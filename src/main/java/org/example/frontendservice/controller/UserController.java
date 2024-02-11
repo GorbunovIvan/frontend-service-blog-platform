@@ -35,7 +35,7 @@ public class UserController {
         if (currentUser != null) {
             return "redirect:/users/" + currentUser.getId();
         }
-        return "redirect:/";
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/{id}")
@@ -51,7 +51,6 @@ public class UserController {
         }
 
         model.addAttribute("user", user);
-        model.addAttribute("currentUser", currentUser);
         model.addAttribute("isOwnPage", user.equals(currentUser));
         model.addAttribute("newPost", new PostRequestDto());
         return "users/user";
@@ -64,7 +63,7 @@ public class UserController {
         if (currentUser != null) {
             return String.format("redirect:/users/%d/edit", currentUser.getId());
         }
-        return "redirect:/";
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/{id}/edit")
@@ -132,9 +131,12 @@ public class UserController {
         }
 
         userService.deleteById(id);
+        usersUtil.logout();
+
         return "redirect:/users";
     }
 
+    @ModelAttribute("currentUser")
     private User getCurrentUser() {
         return usersUtil.getCurrentUser();
     }

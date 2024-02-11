@@ -13,6 +13,8 @@ import java.time.LocalDate;
 public class UserRequestDto {
 
     private String username;
+
+    @ToString.Exclude
     private String password;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

@@ -8,12 +8,14 @@ import org.example.frontendservice.model.dto.CommentRequestDto;
 import org.example.frontendservice.model.dto.PostRequestDto;
 import org.example.frontendservice.model.dto.UserRequestDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,14 +27,16 @@ public class UserServiceDummy implements UserService {
     private final PostService postService;
     private final CommentService commentService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @PostConstruct
     private void init() {
 
-        create(new UserRequestDto("username_1", "password_1", LocalDate.now(), "+134234321"));
-        create(new UserRequestDto("username_2", "password_2", LocalDate.now(), "+286786782"));
-        create(new UserRequestDto("username_3", "password_3", LocalDate.now(), "+372345343"));
-        create(new UserRequestDto("username_4", "password_4", LocalDate.now(), "+415645654"));
-        create(new UserRequestDto("username_5", "password_5", LocalDate.now(), "+534634645"));
+        create(new UserRequestDto("username_1", passwordEncoder.encode("password_1"), LocalDate.now(), "+134234321"));
+        create(new UserRequestDto("username_2", passwordEncoder.encode("password_2"), LocalDate.now(), "+286786782"));
+        create(new UserRequestDto("username_3", passwordEncoder.encode("password_3"), LocalDate.now(), "+372345343"));
+        create(new UserRequestDto("username_4", passwordEncoder.encode("password_4"), LocalDate.now(), "+415645654"));
+        create(new UserRequestDto("username_5", passwordEncoder.encode("password_5"), LocalDate.now(), "+534634645"));
 
         postService.create(new PostRequestDto("post 1 content", this.getById(2L)));
         postService.create(new PostRequestDto("post 2 content", this.getById(2L)));
@@ -108,6 +112,7 @@ public class UserServiceDummy implements UserService {
 
         var userToPersist = user.toUser();
         userToPersist.setId(newId);
+        userToPersist.setPassword(passwordEncoder.encode(userToPersist.getPassword()));
         users.add(userToPersist);
 
         log.info("New user was registered - {}", userToPersist);
@@ -133,9 +138,12 @@ public class UserServiceDummy implements UserService {
         }
 
         userPersisted.setUsername(user.getUsername());
-        userPersisted.setPassword(user.getPassword()); // without encoding
         userPersisted.setBirthDate(user.getBirthDate());
         userPersisted.setPhoneNumber(user.getPhoneNumber());
+
+        if (!Optional.ofNullable(user.getPassword()).orElse("").isBlank()) {
+            userPersisted.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
         return userPersisted;
     }
