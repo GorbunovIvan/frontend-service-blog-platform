@@ -3,9 +3,9 @@ package org.example.frontendservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.frontendservice.model.User;
-import org.example.frontendservice.model.dto.PostRequestDto;
-import org.example.frontendservice.model.dto.UserRequestDto;
-import org.example.frontendservice.service.UserService;
+import org.example.frontendservice.model.dto.posts.PostRequestDto;
+import org.example.frontendservice.model.dto.users.UserRequestDto;
+import org.example.frontendservice.service.users.UserService;
 import org.example.frontendservice.utils.UsersUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -122,16 +122,18 @@ public class UserController {
     public String delete(@PathVariable Long id) {
 
         var currentUser = getCurrentUser();
+
         if (currentUser != null) {
+
             if (!currentUser.getId().equals(id)) {
                 var errorMessage = "You are trying to delete another user's page";
                 log.warn(errorMessage);
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, errorMessage);
             }
-        }
 
-        userService.deleteById(id);
-        usersUtil.logout();
+            userService.deleteById(id);
+            usersUtil.logout();
+        }
 
         return "redirect:/users";
     }

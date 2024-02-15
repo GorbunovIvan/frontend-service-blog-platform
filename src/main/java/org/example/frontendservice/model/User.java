@@ -13,7 +13,7 @@ import java.util.List;
 @Getter @Setter
 @EqualsAndHashCode(of = "username")
 @ToString
-public class User implements UserDetails {
+public class User implements EntityWithId<Long>, UserDetails {
 
     private Long id;
     private String username;
@@ -23,9 +23,10 @@ public class User implements UserDetails {
 
     private LocalDate birthDate;
     private String phoneNumber;
-    private final boolean isActive = true;
 
     private Role role = Role.USER;
+
+    private final boolean isActive = true;
 
     @ToString.Exclude
     private List<Post> posts = new ArrayList<>();
@@ -33,19 +34,20 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Comment> comments = new ArrayList<>();
 
+    public User(Long id) {
+        this.id = id;
+    }
+
     public User(String username, String password, LocalDate birthDate, String phoneNumber) {
+        this(null, username, password, birthDate, phoneNumber);
+    }
+
+    public User(Long id, String username, String password, LocalDate birthDate, String phoneNumber) {
+        setId(id);
         this.username = username;
         this.password = password;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
-    }
-
-    public void addPost(Post post) {
-        getPosts().add(post);
-    }
-
-    public void addComment(Comment comment) {
-        getComments().add(comment);
     }
 
     // Security

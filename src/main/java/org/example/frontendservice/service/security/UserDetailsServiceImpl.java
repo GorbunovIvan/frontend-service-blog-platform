@@ -1,7 +1,7 @@
 package org.example.frontendservice.service.security;
 
 import lombok.RequiredArgsConstructor;
-import org.example.frontendservice.service.UserService;
+import org.example.frontendservice.service.users.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

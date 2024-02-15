@@ -1,4 +1,4 @@
-package org.example.frontendservice.model.dto;
+package org.example.frontendservice.model.dto.users;
 
 import lombok.*;
 import org.example.frontendservice.model.User;

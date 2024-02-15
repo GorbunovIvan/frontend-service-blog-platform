@@ -3,7 +3,7 @@ package org.example.frontendservice.controller.converter;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.example.frontendservice.model.User;
-import org.example.frontendservice.service.UserService;
+import org.example.frontendservice.service.users.UserService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

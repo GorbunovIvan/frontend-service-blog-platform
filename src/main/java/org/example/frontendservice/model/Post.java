@@ -11,7 +11,7 @@ import java.util.List;
 @Getter @Setter
 @EqualsAndHashCode
 @ToString
-public class Post {
+public class Post implements EntityWithId<Long> {
 
     @EqualsAndHashCode.Exclude
     private Long id;
@@ -24,7 +24,16 @@ public class Post {
     @ToString.Exclude
     private List<Comment> comments = new ArrayList<>();
 
+    public Post(Long id) {
+        this.id = id;
+    }
+
     public Post(String content, LocalDateTime createdAt, User user) {
+        this(null, content, createdAt, user);
+    }
+
+    public Post(Long id, String content, LocalDateTime createdAt, User user) {
+        setId(id);
         this.content = content;
         this.user = user;
         if (createdAt != null) {
@@ -39,16 +48,19 @@ public class Post {
         return this.createdAt;
     }
 
+    public Long getUserId() {
+        if (getUser() != null) {
+            return getUser().getId();
+        }
+        return null;
+    }
+
     public String getTitle() {
         if (getContent().length() <= 100) {
             return getContent();
         }
         var shortenedContent = getContent().substring(0, 97);
         return shortenedContent + "...";
-    }
-
-    public void addComment(Comment comment) {
-        getComments().add(comment);
     }
 
     public String toStringShort() {

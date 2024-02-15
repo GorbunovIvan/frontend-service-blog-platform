@@ -1,4 +1,4 @@
-package org.example.frontendservice.model.dto;
+package org.example.frontendservice.model.dto.posts;
 
 import lombok.*;
 import org.example.frontendservice.model.Post;
@@ -24,6 +24,13 @@ public class PostRequestDto {
         this.content = post.getContent();
         this.createdAt = post.getCreatedAt();
         this.user = post.getUser();
+    }
+
+    public Long getUserId() {
+        if (getUser() != null) {
+            return getUser().getId();
+        }
+        return null;
     }
 
     public Post toPost() {

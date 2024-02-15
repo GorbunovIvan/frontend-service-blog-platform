@@ -8,3 +8,26 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+#    circuitbreaker:
+#      resilience4j:
+#        enabled: false
+
+comment-service:
+  graphql-url: http://localhost:8082/graphql
+
+post-service:
+  grpc:
+    host: localhost
+    port: 9090
+
+user-service:
+  url: http://localhost:8083/api/v1/users
+  auth:
+    url: http://localhost:8083/auth
+    username: "admin"
+    password: "admin"
+    requestHeader: "authorization"

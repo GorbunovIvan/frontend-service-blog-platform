@@ -1,7 +1,7 @@
-package org.example.frontendservice.service;
+package org.example.frontendservice.service.users;
 
 import org.example.frontendservice.model.User;
-import org.example.frontendservice.model.dto.UserRequestDto;
+import org.example.frontendservice.model.dto.users.UserRequestDto;
 
 import java.util.List;
 

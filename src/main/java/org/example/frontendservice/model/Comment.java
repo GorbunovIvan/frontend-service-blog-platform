@@ -9,13 +9,19 @@ import java.time.temporal.ChronoUnit;
 @Getter @Setter
 @EqualsAndHashCode
 @ToString
-public class Comment {
+public class Comment implements EntityWithId<String> {
 
+    @EqualsAndHashCode.Exclude
     private String id;
+
     private Post post;
     private User user;
     private String content;
     private LocalDateTime createdAt;
+
+    public Comment(String id) {
+        this.id = id;
+    }
 
     public Comment(Post post, User user, String content, LocalDateTime createdAt) {
         this.post = post;
@@ -27,17 +33,30 @@ public class Comment {
     }
 
     public LocalDateTime getCreatedAt() {
-        if (this.createdAt != null) {
-            return this.createdAt.truncatedTo(ChronoUnit.SECONDS);
+        if (this.createdAt == null) {
+            return null;
         }
-        return this.createdAt;
+        return this.createdAt.truncatedTo(ChronoUnit.SECONDS);
     }
 
     public Long getPostId() {
-        return getPost().getId();
+        if (getPost() != null) {
+            return getPost().getId();
+        }
+        return null;
+    }
+
+    public Long getUserId() {
+        if (getUser() != null) {
+            return getUser().getId();
+        }
+        return null;
     }
 
     public String getTitle() {
+        if (getContent() == null || getContent().isBlank()) {
+            return "";
+        }
         if (getContent().length() <= 100) {
             return getContent();
         }

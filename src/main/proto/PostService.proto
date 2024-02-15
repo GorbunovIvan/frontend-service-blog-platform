@@ -1,0 +1,39 @@
+// This file is the same as the file from the "post-service-blog-platform" microservice.
+
+syntax = "proto3";
+package org.example.postservice.grpc;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+service PostService {
+  rpc getById(IdRequest) returns(PostResponse);
+  rpc getAll(EmptyBody) returns(PostsResponse);
+  rpc getAllByUserId(IdRequest) returns(PostsResponse);
+  rpc create(PostRequest) returns(PostResponse);
+  rpc deleteById(IdRequest) returns(EmptyBody);
+}
+
+message PostRequest {
+  string content = 2;
+  int64 userId = 4;
+}
+
+message PostResponse {
+  int64 id = 1;
+  string content = 2;
+  google.protobuf.Timestamp createdAt = 3;
+  int64 userId = 4;
+}
+
+message EmptyBody {}
+
+message IdRequest {
+  int64 id = 1;
+}
+
+message PostsResponse {
+  repeated PostResponse posts = 1;
+}
+
+// For gradle - "clean", and then "assemble" to generate classes in the "build" directory

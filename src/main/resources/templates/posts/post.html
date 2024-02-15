@@ -8,7 +8,7 @@
 <div>
     <div th:insert="~{fragments/menu :: commonMenu}"></div>
     <div>
-        <p>By: <a th:href="@{/users/__${post.getUser().getId()}__}" th:text="${post.getUser().getUsername()}">user</a></p>
+        <p>By: <a th:href="@{/users/__${post.getUserId()}__}" th:text="${post.getUser().getUsername()}">user</a></p>
         <p>At: <span th:text="${post.getCreatedAt()}">created at</span></p>
         <p>Content: <span th:text="${post.getContent()}">content</span></p>
     </div>
@@ -38,7 +38,7 @@
             <div>
 
                 <span>at <span th:text="${post.getCreatedAt()}">created at</span></span>
-                <span>by: <a th:href="@{/users/__${comment.getUser().getId()}__}" th:text="${comment.getUser().getUsername()}">user</a></span>
+                <span>by: <a th:href="@{/users/__${comment.getUserId()}__}" th:text="${comment.getUser().getUsername()}">user</a></span>
                 <br/>
                 &nbsp;&nbsp;<span th:text="${comment.getContent()}">comment</span>
 

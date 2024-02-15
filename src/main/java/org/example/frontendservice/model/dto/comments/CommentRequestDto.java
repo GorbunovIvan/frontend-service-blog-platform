@@ -1,4 +1,4 @@
-package org.example.frontendservice.model.dto;
+package org.example.frontendservice.model.dto.comments;
 
 import lombok.*;
 import org.example.frontendservice.model.Comment;
@@ -27,6 +27,20 @@ public class CommentRequestDto {
         this.user = comment.getUser();
         this.content = comment.getContent();
         this.createdAt = comment.getCreatedAt();
+    }
+
+    public Long getPostId() {
+        if (getPost() != null) {
+            return getPost().getId();
+        }
+        return null;
+    }
+
+    public Long getUserId() {
+        if (getUser() != null) {
+            return getUser().getId();
+        }
+        return null;
     }
 
     public Comment toComment() {

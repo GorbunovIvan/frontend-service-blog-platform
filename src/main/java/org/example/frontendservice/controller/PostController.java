@@ -3,9 +3,9 @@ package org.example.frontendservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.frontendservice.model.User;
-import org.example.frontendservice.model.dto.CommentRequestDto;
-import org.example.frontendservice.model.dto.PostRequestDto;
-import org.example.frontendservice.service.PostService;
+import org.example.frontendservice.model.dto.comments.CommentRequestDto;
+import org.example.frontendservice.model.dto.posts.PostRequestDto;
+import org.example.frontendservice.service.posts.PostService;
 import org.example.frontendservice.utils.UsersUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -61,16 +61,14 @@ public class PostController {
 
         if (post != null) {
             var currentUser = getCurrentUser();
-            if (currentUser != null) {
-                if (!post.getUser().equals(currentUser)) {
-                    var errorMessage = "You are trying to delete another user's post";
-                    log.warn(errorMessage);
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, errorMessage);
-                }
+            if (!post.getUser().equals(currentUser)) {
+                var errorMessage = "You are trying to delete another user's post";
+                log.warn(errorMessage);
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, errorMessage);
             }
+            postService.deleteById(id);
         }
 
-        postService.deleteById(id);
         return "redirect:/users/self";
     }
 

@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.google.protobuf' version '0.8.17'
 }
 
 group = 'org.example'
@@ -12,7 +13,11 @@ java {
 }
 
 ext {
+    grpcServerSpringBootStarterVersion = '2.15.0.RELEASE'
     lombokVersion = '1.18.20'
+    ioGrpcVersion = '1.61.0'
+    protocVersion = '3.25.2'
+    springCloudVersion = '2023.0.0'
 }
 
 repositories {
@@ -25,12 +30,59 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'org.springframework.boot:spring-boot-starter-rsocket'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j' // to enable fallbacks of feign-clients
+
+    implementation "net.devh:grpc-client-spring-boot-starter:${grpcServerSpringBootStarterVersion}"
+    implementation "com.google.protobuf:protobuf-java:${protocVersion}"
+    implementation "io.grpc:grpc-all:${ioGrpcVersion}"
+
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    testImplementation 'org.springframework.graphql:io.projectreactor'
+    testImplementation 'org.springframework.graphql:reactor-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${ioGrpcVersion}"
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
 }
 
 tasks.named('test') {

@@ -1,8 +1,8 @@
 package org.example.frontendservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.frontendservice.model.dto.UserRequestDto;
-import org.example.frontendservice.service.UserService;
+import org.example.frontendservice.model.dto.users.UserRequestDto;
+import org.example.frontendservice.service.users.UserService;
 import org.example.frontendservice.utils.UsersUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

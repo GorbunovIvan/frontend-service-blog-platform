@@ -3,8 +3,8 @@ package org.example.frontendservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.frontendservice.model.User;
-import org.example.frontendservice.model.dto.CommentRequestDto;
-import org.example.frontendservice.service.CommentService;
+import org.example.frontendservice.model.dto.comments.CommentRequestDto;
+import org.example.frontendservice.service.comments.CommentService;
 import org.example.frontendservice.utils.UsersUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class CommentController {
     @PostMapping
     public String create(CommentRequestDto comment) {
         commentService.create(comment);
-        return "redirect:/posts/" + comment.getPost().getId();
+        return "redirect:/posts/" + comment.getPostId();
     }
 
     @DeleteMapping("/{id}")
@@ -37,16 +37,14 @@ public class CommentController {
 
         if (comment != null) {
             var currentUser = getCurrentUser();
-            if (currentUser != null) {
-                if (!comment.getUser().equals(currentUser)) {
-                    var errorMessage = "You are trying to delete another user's comment";
-                    log.warn(errorMessage);
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, errorMessage);
-                }
+            if (!comment.getUser().equals(currentUser)) {
+                var errorMessage = "You are trying to delete another user's comment";
+                log.warn(errorMessage);
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, errorMessage);
             }
+            commentService.deleteById(id);
         }
 
-        commentService.deleteById(id);
         return "redirect:/users/self";
     }
 
