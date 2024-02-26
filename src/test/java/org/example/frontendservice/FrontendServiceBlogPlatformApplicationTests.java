@@ -1,10 +1,10 @@
 package org.example.frontendservice;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testng.annotations.Test;
 
 @SpringBootTest
-class FrontendServiceBlogPlatformApplicationTests {
+public class FrontendServiceBlogPlatformApplicationTests {
 
     @Test
     void contextLoads() {

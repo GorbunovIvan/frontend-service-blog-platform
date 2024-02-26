@@ -48,8 +48,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
-    testImplementation 'org.springframework.graphql:io.projectreactor'
-    testImplementation 'org.springframework.graphql:reactor-test'
+    testImplementation 'org.testng:testng:7.9.0'
+    testImplementation 'org.mockito:mockito-testng:0.5.2'
 }
 
 dependencyManagement {
@@ -85,6 +85,6 @@ sourceSets {
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+test {
+    useTestNG()
 }

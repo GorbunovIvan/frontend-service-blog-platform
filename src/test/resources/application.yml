@@ -1,0 +1,25 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+comment-service:
+  graphql-url: http://test/graphql
+
+post-service:
+  grpc:
+    host: test
+    port: 0
+
+user-service:
+  url: http://test/api/v1/users
+  auth:
+    url: http://test/auth
+    username: "test"
+    password: "test"
+    requestHeader: "authorization"
