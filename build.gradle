@@ -13,11 +13,12 @@ java {
 }
 
 ext {
-    grpcServerSpringBootStarterVersion = '2.15.0.RELEASE'
     lombokVersion = '1.18.20'
+    grpcServerSpringBootStarterVersion = '2.15.0.RELEASE'
     ioGrpcVersion = '1.61.0'
     protocVersion = '3.25.2'
     springCloudVersion = '2023.0.0'
+    cucumberVersion = '7.15.0'
 }
 
 repositories {
@@ -50,6 +51,10 @@ dependencies {
 
     testImplementation 'org.testng:testng:7.9.0'
     testImplementation 'org.mockito:mockito-testng:0.5.2'
+
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-testng:${cucumberVersion}"
+    testImplementation 'com.codeborne:selenide:7.1.0'
 }
 
 dependencyManagement {
@@ -85,6 +90,6 @@ sourceSets {
     }
 }
 
-test {
+tasks.named('test') {
     useTestNG()
 }

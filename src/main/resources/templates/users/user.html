@@ -7,6 +7,7 @@
 <body>
 <div>
     <div th:insert="~{fragments/menu :: commonMenu}"></div>
+    <h2>User</h2>
     <div>
         <p>Username: <span th:text="${user.getUsername()}">username</span></p>
         <p>Birthdate: <span th:text="${user.getBirthDate()}">birthdate</span></p>
@@ -16,7 +17,7 @@
         <hr/>
         <p><a th:href="@{/users/__${user.getId()}__/edit}">Edit</a></p>
         <div>
-            <form method="POST" th:action="@{/users/__${id}__}">
+            <form id="user-deleting-form" method="POST" th:action="@{/users/__${id}__}">
                 <input type="hidden" name="_method" value="DELETE">
                 <div><input type="submit" value="Delete"/></div>
             </form>
@@ -26,7 +27,7 @@
         <hr/>
         <h3>Posts</h3>
         <div th:if="${isOwnPage == true}">
-            <form method="POST" th:action="@{/posts}" th:object="${newPost}">
+            <form id="post-adding-form" method="POST" th:action="@{/posts}" th:object="${newPost}">
                 <label><input hidden name="user" th:value="${currentUser}"/></label>
                 <div>
                     <label for="content"></label>
@@ -39,7 +40,7 @@
         <div th:each="post : ${user.getPosts()}">
             <div>
                 <a th:href="@{/posts/__${post.getId()}__}" th:text="${post.toStringShort()}">post</a>
-                <form th:if="${isOwnPage}" method="POST" th:action="@{/posts/__${post.getId()}__}">
+                <form id="post-delete-form" th:if="${isOwnPage}" method="POST" th:action="@{/posts/__${post.getId()}__}">
                     <input type="hidden" name="_method" value="DELETE">
                     <div><input type="submit" value="Delete"/></div>
                 </form>

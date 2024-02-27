@@ -7,6 +7,7 @@
 <body>
     <div>
         <div th:insert="~{fragments/menu :: commonMenu}"></div>
+        <h2>Editing user</h2>
         <div>
             <form method="POST" th:action="@{/users/__${id}__}" th:object="${user}">
                 <input type="hidden" name="_method" value="PATCH">

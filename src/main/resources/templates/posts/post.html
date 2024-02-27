@@ -7,6 +7,7 @@
 <body>
 <div>
     <div th:insert="~{fragments/menu :: commonMenu}"></div>
+    <h2>Post</h2>
     <div>
         <p>By: <a th:href="@{/users/__${post.getUserId()}__}" th:text="${post.getUser().getUsername()}">user</a></p>
         <p>At: <span th:text="${post.getCreatedAt()}">created at</span></p>
@@ -14,7 +15,7 @@
     </div>
     <div th:if="${isOwnPost == true}">
         <hr/>
-        <form method="POST" th:action="@{/posts/__${id}__}">
+        <form id="post-delete-form" method="POST" th:action="@{/posts/__${id}__}">
             <input type="hidden" name="_method" value="DELETE">
             <div><input type="submit" value="Delete"/></div>
         </form>
@@ -23,7 +24,7 @@
         <hr/>
         <h3>Comments</h3>
         <div th:if="${currentUser}">
-            <form method="POST" th:action="@{/comments}" th:object="${newComment}">
+            <form id="comment-adding-form" method="POST" th:action="@{/comments}" th:object="${newComment}">
                 <label><input hidden name="post" th:value="${post}"/></label>
                 <label><input hidden name="user" th:value="${currentUser}"/></label>
                 <div>
@@ -42,7 +43,7 @@
                 <br/>
                 &nbsp;&nbsp;<span th:text="${comment.getContent()}">comment</span>
 
-                <form th:if="${comment.getUser().equals(currentUser)}" method="POST" th:action="@{/comments/__${comment.getId()}__}">
+                <form id="comment-delete-form" th:if="${comment.getUser().equals(currentUser)}" method="POST" th:action="@{/comments/__${comment.getId()}__}">
                     <input type="hidden" name="_method" value="DELETE">
                     <div><input type="submit" value="Delete"/></div>
                 </form>

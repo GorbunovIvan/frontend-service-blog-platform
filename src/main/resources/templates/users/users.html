@@ -7,6 +7,7 @@
 <body>
     <div>
         <div th:insert="~{fragments/menu :: commonMenu}"></div>
+        <h2>Users</h2>
         <div th:each="user : ${users}">
             <div>
                 <a th:href="@{/users/__${user.getId()}__}" th:text="${user.getUsername()}">user</a>
