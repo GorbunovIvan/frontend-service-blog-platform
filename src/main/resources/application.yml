@@ -17,17 +17,21 @@ spring:
 #        enabled: false
 
 comment-service:
-  graphql-url: http://localhost:8082/graphql
+#  graphql-url: http://localhost:8082/graphql
+  graphql-url: http://comment-service:8082/graphql # for docker
 
 post-service:
   grpc:
-    host: localhost
+#    host: localhost
+    host: post-service # for docker
     port: 9090
 
 user-service:
-  url: http://localhost:8083/api/v1/users
+#  url: http://localhost:8083/api/v1/users
+  url: http://user-service:8083/api/v1/users # for docker
   auth:
-    url: http://localhost:8083/auth
+#    url: http://localhost:8083/auth
+    url: http://user-service:8083/auth # for docker
     username: "admin"
     password: "admin"
     requestHeader: "authorization"

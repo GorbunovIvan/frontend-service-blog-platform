@@ -1,0 +1,10 @@
+
+version: "3.8"
+
+services:
+
+  #  App
+  frontend-service-blog-platform:
+    image: frontend-service-blog-platform-image
+    ports:
+      - "8084:8084"
