@@ -56,7 +56,6 @@ public class UserController {
         return "users/user";
     }
 
-
     @GetMapping("/edit")
     public String edit() {
         var currentUser = getCurrentUser();

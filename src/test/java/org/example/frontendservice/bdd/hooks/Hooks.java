@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 public class Hooks {
 
     private final BasicPageDefinitions basicPage = new BasicPageDefinitions();
+    private final String URL = "http://localhost:8084";
 
     private static final Logger logger = LoggerFactory.getLogger(Hooks.class);
 
@@ -45,7 +46,7 @@ public class Hooks {
     }
 
     private void performRegistration() {
-        basicPage.openURL("http://localhost:8084/auth/register");
+        basicPage.openURL(URL + "/auth/register");
         basicPage.hasText("h2", "Registration");
         basicPage.enterTextInInputFieldByName("delete-username","username");
         basicPage.enterTextInInputFieldByName("delete-password", "password");
@@ -56,7 +57,7 @@ public class Hooks {
     }
 
     private void performLogin() {
-        basicPage.openURL("http://localhost:8084/auth/login");
+        basicPage.openURL(URL + "/auth/login");
         basicPage.hasText("h2", "Log in");
         basicPage.enterTextInInputFieldByName("delete-username","username");
         basicPage.enterTextInInputFieldByName("delete-password", "password");
@@ -67,14 +68,14 @@ public class Hooks {
     }
 
     private void performDeletingUser() {
-        basicPage.openURL("http://localhost:8084/users/self");
+        basicPage.openURL(URL + "/users/self");
         basicPage.hasText("a", "My page");
         basicPage.hasText("span", "delete-username");
         basicPage.clickInputSubmitFieldWithValueInFromWithId("Delete", "user-deleting-form");
     }
 
     private void performAddingPost() {
-        basicPage.openURL("http://localhost:8084/users/self");
+        basicPage.openURL(URL + "/users/self");
         basicPage.hasText("h2", "User");
         basicPage.enterTextInInputFieldByNameInFromWithId("post to delete", "textarea", "content", "post-adding-form");
         basicPage.clickInputSubmitFieldWithValueInFromWithId("Add post", "post-adding-form");
@@ -82,7 +83,7 @@ public class Hooks {
     }
 
     private void performDeletingPost() {
-        basicPage.openURL("http://localhost:8084/users/self");
+        basicPage.openURL(URL + "/users/self");
         basicPage.hasText("h2", "User");
         basicPage.containsText("a", "post to delete");
         basicPage.clickLinkContainingText("post to delete");
