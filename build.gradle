@@ -19,6 +19,7 @@ ext {
     protocVersion = '3.25.2'
     springCloudVersion = '2023.0.0'
     cucumberVersion = '7.15.0'
+    springCloudVersion = "2023.0.0"
 }
 
 repositories {
@@ -30,6 +31,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'com.netflix.eureka:eureka-client-jersey3:2.0.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'org.springframework.boot:spring-boot-starter-rsocket'
