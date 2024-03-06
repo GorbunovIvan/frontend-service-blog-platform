@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'com.netflix.eureka:eureka-client-jersey3:2.0.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
