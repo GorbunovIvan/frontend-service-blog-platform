@@ -1,0 +1,41 @@
+# Frontend-service Deployment
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: blog-platform-frontend-deployment
+  labels:
+    app: blog-platform-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: blog-platform-frontend
+  template:
+    metadata:
+      labels:
+        project: blog-platform-frontend
+    spec:
+      containers:
+        - name: frontend-service
+          image: ivangorbunovv/blog-platform-spring-cloud:frontend-service-blog-platform-image
+          ports:
+            - containerPort: 8084
+
+---
+# Frontend-service Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+     env  : dev
+     owner: IvanGorbunov
+spec:
+  selector:
+    project: blog-platform-frontend
+  ports:
+    - name      : frontend-service-listener
+      protocol  : TCP
+      port      : 8084
+      targetPort: 8084
+  #type: CLusterIP

@@ -9,4 +9,4 @@ EXPOSE 8084
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 # Run:
-#   'docker build -t frontend-service-blog-platform-image .'
+#   'docker build -t ivangorbunovv/frontend-service-blog-platform-image .'
